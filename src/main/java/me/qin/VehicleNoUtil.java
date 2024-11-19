@@ -10,114 +10,115 @@ import java.util.regex.Pattern;
  * @ClassName com.rhjc56.smart.park.common.tools.VehicleNoUtil
  */
 public class VehicleNoUtil {
+    // 预编译正则表达式以提高性能
     /**
      * 新能源车牌
      */
-    public static final String NEW_ENERGY_VEHICLE_REGEXP = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z](([0-9]{5}[DABCEFGHJK])|([DABCEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4}))$";
-    /**
-     * 所有车牌
-     */
-    public static final String ALL_VEHICLE_REGEXP = "^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z](([0-9]{5}[DABCEFGHJK])|([DABCEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$";
-
+    private static final Pattern NEW_ENERGY_VEHICLE_PATTERN = Pattern.compile(
+            "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z](([0-9]{5}[DABCEFGHJK])|([DABCEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4}))$"
+    );
     /**
      * 新能源小型车
      */
-    public static final String NEW_ENERGY_SMALL_CAR_REGEXP = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][DABCEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4}$";
-    public static final String NEW_ENERGY_LARGE_CAR_REGEXP = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][0-9]{5}[DABCEFGHJK]$";
+    private static final Pattern NEW_ENERGY_SMALL_CAR_PATTERN = Pattern.compile(
+            "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][DABCEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4}$"
+    );
     /**
-     * 普通车辆
+     * 新能源大型车
      */
-    public static final String ORDINARY_VEHICLE = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]$";
+    private static final Pattern NEW_ENERGY_LARGE_CAR_PATTERN = Pattern.compile(
+            "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][0-9]{5}[DABCEFGHJK]$"
+    );
+    /**
+     * 普通车辆/传统车辆
+     */
+    private static final Pattern ORDINARY_VEHICLE_PATTERN = Pattern.compile(
+            "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]$"
+    );
+
 
     // Small car 小型车
     // large car 大型车
+
     /**
      * 校验是否为新能源车
+     *
      * @param vehicleNo 车牌号
      * @return true-新能源车
      */
     public static boolean isNewEnergyVehicle(String vehicleNo) {
-        Pattern compile = Pattern.compile(NEW_ENERGY_VEHICLE_REGEXP);
-        if (vehicleNo == null || vehicleNo.isEmpty()) {
+        if (isEmpty(vehicleNo)) {
             return false;
         }
-        boolean rt = false;
-        try {
-            rt = Pattern.matches(NEW_ENERGY_VEHICLE_REGEXP, vehicleNo);
-        } catch (Exception ignored) {
-        }
-        return rt;
+        return NEW_ENERGY_VEHICLE_PATTERN.matcher(vehicleNo).matches();
     }
 
     /**
      * 新能源小型车
+     *
      * @param vehicleNo 车牌
      * @return boolean
      */
     public static boolean isNewEnergySmallCar(String vehicleNo) {
-        if (vehicleNo == null || vehicleNo.isEmpty()) {
+        if (isEmpty(vehicleNo)) {
             return false;
         }
-
-        boolean rt = false;
-        try {
-            rt = Pattern.matches(NEW_ENERGY_SMALL_CAR_REGEXP, vehicleNo);
-        } catch (Exception ignored) {
-        }
-        return rt;
+        return NEW_ENERGY_SMALL_CAR_PATTERN.matcher(vehicleNo).matches();
     }
 
     /**
      * 新能源大型车
+     *
      * @param vehicleNo 车牌
      * @return boolean
      */
     public static boolean isNewEnergyLargeCar(String vehicleNo) {
-        if (vehicleNo == null || vehicleNo.isEmpty()) {
+        if (isEmpty(vehicleNo)) {
             return false;
         }
-
-        boolean rt = false;
-        try {
-            rt = Pattern.matches(NEW_ENERGY_LARGE_CAR_REGEXP, vehicleNo);
-        } catch (Exception ignored) {
-        }
-        return rt;
+        return NEW_ENERGY_LARGE_CAR_PATTERN.matcher(vehicleNo).matches();
     }
 
     /**
      * 普通车辆
+     *
      * @param vehicleNo 车牌
      * @return boolean
      */
     public static boolean isOrdinaryVehicle(String vehicleNo) {
-        if (vehicleNo == null || vehicleNo.isEmpty()) {
+        if (isEmpty(vehicleNo)) {
             return false;
         }
-
-        boolean rt = false;
-        try {
-            rt = Pattern.matches(ORDINARY_VEHICLE, vehicleNo);
-        } catch (Exception ignored) {
-        }
-        return rt;
+        return ORDINARY_VEHICLE_PATTERN.matcher(vehicleNo).matches();
     }
 
     /**
      * 所有车
+     *
      * @param vehicleNo 车牌
      * @return boolean
      */
     public static boolean isVehicle(String vehicleNo) {
-        if (vehicleNo == null || vehicleNo.isEmpty()) {
+        if (isEmpty(vehicleNo)) {
             return false;
         }
+        return NEW_ENERGY_VEHICLE_PATTERN.matcher(vehicleNo).matches() || ORDINARY_VEHICLE_PATTERN.matcher(vehicleNo).matches();
+    }
 
-        boolean rt = false;
-        try {
-            rt = Pattern.matches(ALL_VEHICLE_REGEXP, vehicleNo);
-        } catch (Exception ignored) {
-        }
-        return rt;
+    private static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        String v2 = "云A12345";
+        long l = System.currentTimeMillis();
+        System.out.println(isVehicle(v2));
+        long l1 = System.currentTimeMillis();
+        System.out.println(l1 - l);
+
+        long l2 = System.currentTimeMillis();
+        System.out.println(isVehicle(v2));
+        long l3 = System.currentTimeMillis();
+        System.out.println(l3 - l2);
     }
 }
