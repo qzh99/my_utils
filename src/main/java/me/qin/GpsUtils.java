@@ -3,6 +3,7 @@ package me.qin;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Description: 各坐标系之间的转换工具类
@@ -298,8 +299,8 @@ public class GpsUtils {
 		}
 
 		public Point(double lng, double lat) {
-			this.lng = lng;
-			this.lat = lat;
+			this.lng = new BigDecimal(lng).setScale(9, RoundingMode.HALF_UP).doubleValue();
+			this.lat = new BigDecimal(lat).setScale(9, RoundingMode.HALF_UP).doubleValue();
 		}
 
 		public double getLat() {
@@ -346,5 +347,7 @@ public class GpsUtils {
 		long d = calculateDistance(BigDecimal.valueOf(lat1), BigDecimal.valueOf(lng1), BigDecimal.valueOf(lat2), BigDecimal.valueOf(lng2));
 		System.out.println(System.currentTimeMillis() - l2);;
 		System.out.println(d);
+
+		System.out.println(wgs84ToGcj02(116.45, 39.89));
 	}
 }
