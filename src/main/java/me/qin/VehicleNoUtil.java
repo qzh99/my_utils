@@ -1,5 +1,4 @@
 package me.qin;
-
 import java.util.regex.Pattern;
 
 /**
@@ -107,18 +106,5 @@ public class VehicleNoUtil {
 
     private static boolean isEmpty(String str) {
         return str == null || str.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        String v2 = "云A12345";
-        long l = System.currentTimeMillis();
-        System.out.println(isVehicle(v2));
-        long l1 = System.currentTimeMillis();
-        System.out.println(l1 - l);
-
-        long l2 = System.currentTimeMillis();
-        System.out.println(isVehicle(v2));
-        long l3 = System.currentTimeMillis();
-        System.out.println(l3 - l2);
     }
 }
