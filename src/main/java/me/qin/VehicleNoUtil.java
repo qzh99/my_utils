@@ -3,10 +3,10 @@ import java.util.regex.Pattern;
 
 /**
  * @Description 车牌正则表达式
- * @Author QinZhengHua
+ * @Author qzh
  * @Date 2024/3/11 14:21
  * @Version V1.0
- * @ClassName com.rhjc56.smart.park.common.tools.VehicleNoUtil
+ * @ClassName me.qin.VehicleNoUtil
  */
 public class VehicleNoUtil {
     // 预编译正则表达式以提高性能

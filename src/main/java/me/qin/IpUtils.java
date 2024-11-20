@@ -9,13 +9,6 @@ import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * IP地址
- * 
- * @Author scott
- * @email jeecgos@163.com
- * @Date 2019年01月14日
- */
 public class IpUtils {
     private static final Logger logger = LoggerFactory.getLogger(IpUtils.class);
     private final static String UNKNOWN = "unknown";
